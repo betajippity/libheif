@@ -2673,6 +2673,12 @@ Error HeifContext::encode_image_as_av1(const std::shared_ptr<HeifPixelImage>& im
   return Error::Ok;
 }
 
+void HeifContext::set_image_id_as_aux(heif_item_id aux_id,
+                                      heif_item_id image_id,
+                                      const std::string &type) {
+  m_heif_file->add_iref_reference(aux_id, fourcc("auxl"), {image_id});
+  m_heif_file->set_auxC_property(aux_id, type);
+}
 
 static uint8_t JPEG_SOS = 0xDA;
 

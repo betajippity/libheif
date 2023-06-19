@@ -468,6 +468,8 @@ public:
 
   void write(StreamWriter& writer);
 
+  void set_image_id_as_aux(heif_item_id aux_id, heif_item_id image_id, const std::string& type);
+
 private:
   std::map<heif_item_id, std::shared_ptr<Image>> m_all_images;
 

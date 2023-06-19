@@ -831,6 +831,9 @@ struct heif_error heif_image_handle_get_auxiliary_image_handle(const struct heif
                                                                heif_item_id auxiliary_id,
                                                                struct heif_image_handle** out_auxiliary_handle);
 
+LIBHEIF_API
+struct heif_error heif_context_set_gainmap(struct heif_context *context,
+                                           heif_item_id aux_id, heif_item_id image_id);
 
 // ------------------------- metadata (Exif / XMP) -------------------------
 

@@ -745,6 +745,17 @@ struct heif_error heif_image_handle_get_auxiliary_image_handle(const struct heif
   return err.error_struct(main_image_handle->image.get());
 }
 
+struct heif_error heif_context_set_gainmap(struct heif_context *context,
+                                           heif_item_id aux_id,
+                                           heif_item_id image_id){
+  context->context->set_image_id_as_aux(aux_id, image_id,
+                               "urn:com:apple:photo:2020:aux:hdrgainmap");
+
+  struct heif_image_handle* image_handle;
+  heif_context_get_image_handle(context, image_id, &image_handle);
+
+  return Error::Ok.error_struct(image_handle->image.get());
+                                           }
 
 int heif_image_handle_get_width(const struct heif_image_handle* handle)
 {
