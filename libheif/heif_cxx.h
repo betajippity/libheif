@@ -183,6 +183,14 @@ namespace heif {
     // throws Error
     void write_to_file(const std::string& filename) const;
 
+    heif_context *get_raw_context() noexcept {
+      return  m_context.get();
+    }
+
+    const heif_context *get_raw_context() const noexcept {
+      return  m_context.get();
+    }
+
   private:
     std::shared_ptr<heif_context> m_context;
 
@@ -311,11 +319,10 @@ namespace heif {
     Image() = default;
 
     Image(heif_image* image);
-
+    Image(const std::shared_ptr<heif_image> &image);
 
     // throws Error
-    void create(int width, int height,
-                enum heif_colorspace colorspace,
+    void create(int width, int height, enum heif_colorspace colorspace,
                 enum heif_chroma chroma);
 
     // throws Error
@@ -464,6 +471,12 @@ namespace heif {
     void set_parameter(const std::string& parameter_name, const std::string& parameter_value);
 
     std::string get_parameter(const std::string& parameter_name) const;
+
+    heif_encoder *get_raw_encoder() noexcept { return m_encoder.get(); }
+
+    const heif_encoder *get_raw_encoder() const noexcept {
+      return m_encoder.get();
+    }
 
   private:
     Encoder(struct heif_encoder*) noexcept;
@@ -836,6 +849,9 @@ namespace heif {
                                           [](heif_image* h) { heif_image_release(h); });
   }
 
+  inline Image::Image(const std::shared_ptr<heif_image>& image) {
+    m_image = image;
+  }
 
   inline void Image::create(int width, int height,
                             enum heif_colorspace colorspace,
